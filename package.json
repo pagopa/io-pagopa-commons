@@ -2,9 +2,55 @@
   "name": "italia-pagopa-commons",
   "version": "0.0.1",
   "description": "Common code for integrating with PagoPA",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": "https://github.com/teamdigitale/italia-pagopa-commons",
   "author": "Federico Feroldi <federico@teamdigitale.governo.it>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "prepare": "rimraf lib && npm run build",
+    "build": "tsc",
+    "postversion": "git push --tags",
+    "test": "jest",
+    "lint": "tslint --project .",
+    "check-typings": "tsc -p typings-checker",
+    "typedoc": "typedoc --out docs/ --exclude '**/__tests__/*' --module commonjs --theme minimal src",
+    "docs": "rimraf docs && npm run typedoc && touch docs/.nojekyll"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "skipBabel": true
+      }
+    },
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "dependencies": {
+    "io-ts": "^1.4.2",
+    "italia-ts-commons": "^2.14.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.10",
+    "jest": "^23.6.0",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.1"
+  }
 }
