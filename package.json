@@ -1,0 +1,10 @@
+{
+  "name": "italia-pagopa-commons",
+  "version": "0.0.1",
+  "description": "Common code for integrating with PagoPA",
+  "main": "index.js",
+  "repository": "https://github.com/teamdigitale/italia-pagopa-commons",
+  "author": "Federico Feroldi <federico@teamdigitale.governo.it>",
+  "license": "MIT",
+  "private": false
+}
