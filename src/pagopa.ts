@@ -140,12 +140,12 @@ function paymentNoticeNumberToString(
     paymentNoticeNumber.auxDigit === "0"
       ? paymentNoticeNumber.iuv13
       : paymentNoticeNumber.auxDigit === "1"
-        ? paymentNoticeNumber.iuv17
-        : paymentNoticeNumber.auxDigit === "2"
-          ? paymentNoticeNumber.iuv15
-          : paymentNoticeNumber.auxDigit === "3"
-            ? paymentNoticeNumber.iuv13
-            : "",
+      ? paymentNoticeNumber.iuv17
+      : paymentNoticeNumber.auxDigit === "2"
+      ? paymentNoticeNumber.iuv15
+      : paymentNoticeNumber.auxDigit === "3"
+      ? paymentNoticeNumber.iuv13
+      : "",
     paymentNoticeNumber.auxDigit !== "1" ? paymentNoticeNumber.checkDigit : ""
   ].join("");
 }
