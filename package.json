@@ -22,25 +22,9 @@
     "docs": "rimraf docs && npm run typedoc && touch docs/.nojekyll"
   },
   "jest": {
-    "globals": {
-      "ts-jest": {
-        "skipBabel": true
-      }
-    },
     "testEnvironment": "node",
     "collectCoverage": true,
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
+    "preset": "ts-jest"
   },
   "dependencies": {
     "io-ts": "^1.4.2",
