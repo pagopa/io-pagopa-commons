@@ -1045,7 +1045,7 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-fp-ts@^1.0.0, fp-ts@^1.6.0:
+fp-ts@^1.0.0, fp-ts@^1.6.2:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.12.0.tgz#d333310e4ac104cdcb6bea47908e381bb09978e7"
 
@@ -1312,7 +1312,7 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
-io-ts@^1.1.4, io-ts@^1.4.2:
+io-ts@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.4.2.tgz#d3cb1ef7d7ba68d59af85d839a728aad7f4b1c28"
   dependencies:
@@ -1583,12 +1583,12 @@ istanbul-reports@^1.5.1:
   dependencies:
     handlebars "^4.0.3"
 
-italia-ts-commons@^2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-2.14.1.tgz#4196a9c369181260c8f4eb65a3db10cd90c7f63b"
+italia-ts-commons@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-3.1.1.tgz#1199bbafc3ec7da573e45175b9f424e3351ac26c"
   dependencies:
-    fp-ts "^1.6.0"
-    io-ts "^1.1.4"
+    fp-ts "^1.6.2"
+    io-ts "^1.4.2"
     json-set-map "^1.0.2"
     validator "^10.1.0"
     winston "^3.0.0"
