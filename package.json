@@ -1,5 +1,5 @@
 {
-  "name": "italia-pagopa-commons",
+  "name": "io-pagopa-commons",
   "version": "0.0.2",
   "description": "Common code for integrating with PagoPA",
   "main": "lib/index.js",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "io-ts": "^1.4.2",
-    "italia-ts-commons": "^3.1.1"
+    "io-ts-commons": "^3.1.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",

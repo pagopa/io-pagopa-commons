@@ -7,7 +7,7 @@ import {
   IPatternStringTag,
   OrganizationFiscalCode,
   PatternString
-} from "italia-ts-commons/lib/strings";
+} from "io-ts-commons/lib/strings";
 
 export const MIN_AMOUNT_DIGITS = 2;
 export const MAX_AMOUNT_DIGITS = 10;

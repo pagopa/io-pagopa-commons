@@ -21,7 +21,7 @@ import {
   rptIdFromQrCodeString,
   AmountInEuroCentsFromNumber
 } from "../pagopa";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import { OrganizationFiscalCode } from "io-ts-commons/lib/strings";
 
 describe("PaymentNoticeNumberFromString", () => {
   it("should succeed with valid PaymentNoticeNumberFromString", async () => {
