@@ -253,9 +253,7 @@ type PaymentNoticeQrCode2 = t.TypeOf<typeof PaymentNoticeQrCode2>;
 /**
  * Defines the QR Code string that contains PagoPA payment information.
  */
-export const PaymentNoticeQrCode = t.taggedUnion("version", [
-  PaymentNoticeQrCode2
-]);
+export const PaymentNoticeQrCode = PaymentNoticeQrCode2;
 export type PaymentNoticeQrCode = t.TypeOf<typeof PaymentNoticeQrCode>;
 
 /**

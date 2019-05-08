@@ -26,8 +26,8 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "io-ts": "^1.4.2",
-    "italia-ts-commons": "^3.1.1"
+    "io-ts": "1.8.5",
+    "italia-ts-commons": "5.1.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
@@ -40,7 +40,7 @@
     "tslint-immutable": "^5.0.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typedoc": "^0.13.0",
-    "typescript": "^3.2.1",
+    "typescript": "^3.4.5",
     "typestrict": "^1.0.1"
   }
 }
