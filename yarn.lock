@@ -3098,8 +3098,9 @@ tslint-config-prettier@^1.17.0:
   resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.17.0.tgz#946ed6117f98f3659a65848279156d87628c33dc"
 
 tslint-immutable@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/tslint-immutable/-/tslint-immutable-5.0.0.tgz#6c0c23be1949a80a344576378aa499f05ef8bd22"
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/tslint-immutable/-/tslint-immutable-5.5.2.tgz#57331f6100156fa7ac4503e121cd2616df5bab8a"
+  integrity sha512-+dSMhEeUyRMrBe9XcjfRXT/FmqWKXsSdxttWoDzhUFSNCg8wfXx29M/ClQ78HhmdTaK+DDQsNS3wTGpSIhOv3g==
   dependencies:
     tsutils "^2.28.0 || ^3.0.0"
 
