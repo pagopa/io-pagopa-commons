@@ -1260,6 +1260,13 @@ io-ts@1.8.5:
   dependencies:
     fp-ts "^1.0.0"
 
+io-ts@1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.9.0.tgz#f0db18a05d4b7b3bad71a8a2a1809c4337cf5012"
+  integrity sha512-4c7xHgBktYOVcyNJqEZb35DenDUN6nsKD9ZJxCxczR784Kvihz8+LxF53LNWbz970gaNs7KwfRvJbzGO/Y7eHg==
+  dependencies:
+    fp-ts "^1.0.0"
+
 is-accessor-descriptor@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/is-accessor-descriptor/-/is-accessor-descriptor-0.1.6.tgz#a9e12cb3ae8d876727eeef3843f8a0897b5c98d6"
