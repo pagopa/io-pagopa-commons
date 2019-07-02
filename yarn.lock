@@ -1521,10 +1521,10 @@ istanbul-reports@^1.5.1:
   dependencies:
     handlebars "^4.0.3"
 
-italia-ts-commons@5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-5.1.1.tgz#a4b66158286b8472ae36b685323d71841059524a"
-  integrity sha512-sTWo7U5e0VRRTjxZH7CrmTEhpsVzzCDp/FS8neiDZy/lBRohHtRAosrgqqYzhNZpUMraY5Hko8K51Ggxfb02zQ==
+italia-ts-commons@5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-5.1.5.tgz#062d70e91ad35e413405cb0c679f8210c97cc47d"
+  integrity sha512-uAUe3Q8EXPCI8Iy6El8ff0PmUM+CG3X7iscjLr90+7sXCpyucMl6Mwz0TREKtQ0tKc/uAP/1yWw7QgaLCvDflg==
   dependencies:
     fp-ts "1.12.0"
     io-ts "1.8.5"
