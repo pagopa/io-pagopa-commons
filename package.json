@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "io-ts": "1.8.5",
-    "italia-ts-commons": "5.1.1"
+    "italia-ts-commons": "5.1.13"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
