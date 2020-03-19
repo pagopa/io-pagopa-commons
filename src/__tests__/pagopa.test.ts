@@ -1,7 +1,9 @@
 import { isRight } from "fp-ts/lib/Either";
 import { StrMap, toArray } from "fp-ts/lib/StrMap";
+import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import {
   AmountInEuroCents,
+  AmountInEuroCentsFromNumber,
   ApplicationCode,
   CheckDigit,
   IUV13,
@@ -16,12 +18,10 @@ import {
   PaymentNoticeQrCode,
   PaymentNoticeQrCodeFromString,
   rptIdFromPaymentNoticeQrCode,
-  RptIdFromString,
-  SegregationCode,
   rptIdFromQrCodeString,
-  AmountInEuroCentsFromNumber
+  RptIdFromString,
+  SegregationCode
 } from "../pagopa";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
 describe("PaymentNoticeNumberFromString", () => {
   it("should succeed with valid PaymentNoticeNumberFromString", async () => {
@@ -133,25 +133,92 @@ describe("PaymentNoticeNumberFromString", () => {
 });
 
 describe("QrCodeFromString", () => {
-  it("should succeed with valid QrCode", async () => {
-    const qrCodeSrt = "PAGOPA|002|123456789012345678|12345678901|1234567801";
-    const validation = PaymentNoticeQrCodeFromString.decode(qrCodeSrt);
-    expect(isRight(validation)).toBeTruthy();
-    if (isRight(validation)) {
-      expect(validation.value.amount).toHaveLength(10);
-      expect(validation.value.identifier).toHaveLength(6);
-      expect(validation.value.version).toHaveLength(3);
-      expect(validation.value.organizationFiscalCode).toHaveLength(11);
-      expect(validation.value.paymentNoticeNumber.auxDigit).toEqual("1");
-      // tslint:disable-next-line:no-any
-      expect((validation.value.paymentNoticeNumber as any).iuv17).toEqual(
-        "23456789012345678"
-      );
-      expect(PaymentNoticeQrCodeFromString.encode(validation.value)).toEqual(
-        qrCodeSrt
-      );
+  it.each([
+    [
+      "PAGOPA|002|123456789012345678|12345678901|1234567801",
+      "23456789012345678",
+      10,
+      "1",
+      "should succeed with valid QrCode"
+    ],
+    [
+      "PAGOPA|002|302032002700000251|03334231200|11",
+      "0320027000002",
+      2,
+      "3",
+      "should succeed with valid QrCode of two digits amount"
+    ],
+    [
+      "PAGOPA|002|302032002700000251|03334231200|01",
+      "0320027000002",
+      2,
+      "3",
+      "should succeed with valid QrCode of one cent"
+    ],
+    [
+      "PAGOPA|002|302032002700000251|03334231200|001",
+      "0320027000002",
+      3,
+      "3",
+      "should succeed with valid QrCode of tree digits amount"
+    ],
+    [
+      "PAGOPA|002|302032002700000251|03334231200|0001",
+      "0320027000002",
+      4,
+      "3",
+      "should succeed with valid QrCode of four digits amount"
+    ],
+    [
+      "PAGOPA|002|302032002700000251|03334231200|999",
+      "0320027000002",
+      3,
+      "3",
+      "should succeed with valid QrCode of tree digits amount"
+    ],
+    [
+      "PAGOPA|002|302032002700000251|03334231200|1000",
+      "0320027000002",
+      4,
+      "3",
+      "should succeed with valid QrCode of four digits amount"
+    ]
+  ])(
+    "%s, %s, %s, %s",
+    async (
+      qrCodeSrt,
+      paymentNoticeNumber,
+      expectedAmountLegth,
+      expectedAuxDigit
+    ) => {
+      const validation = PaymentNoticeQrCodeFromString.decode(qrCodeSrt);
+      expect(isRight(validation)).toBeTruthy();
+      if (isRight(validation)) {
+        expect(validation.value.amount).toHaveLength(expectedAmountLegth);
+        expect(validation.value.identifier).toHaveLength(6);
+        expect(validation.value.version).toHaveLength(3);
+        expect(validation.value.organizationFiscalCode).toHaveLength(11);
+        expect(validation.value.paymentNoticeNumber.auxDigit).toEqual(
+          expectedAuxDigit
+        );
+
+        if (expectedAuxDigit === "0" || expectedAuxDigit === "3") {
+          // tslint:disable-next-line:no-any
+          expect((validation.value.paymentNoticeNumber as any).iuv13).toEqual(
+            paymentNoticeNumber
+          );
+        } else {
+          // tslint:disable-next-line:no-any
+          expect((validation.value.paymentNoticeNumber as any).iuv17).toEqual(
+            paymentNoticeNumber
+          );
+        }
+        expect(PaymentNoticeQrCodeFromString.encode(validation.value)).toEqual(
+          qrCodeSrt
+        );
+      }
     }
-  });
+  );
 
   it("should fail with invalid QrCode", async () => {
     const qrCodeSrts: ReadonlyArray<string> = [
@@ -239,6 +306,7 @@ describe("rptIdFromPaymentNoticeQrCode", () => {
   });
 
   it("should NOT convert an invalid PaymentNoticeQrcode into an RptId", async () => {
+    // tslint:disable-next-line: no-any
     const qrCodes: ReadonlyArray<any> = [
       {
         identifier: "PAGOPA",
