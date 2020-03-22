@@ -4,8 +4,8 @@
   "description": "Common code for integrating with PagoPA",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "repository": "https://github.com/teamdigitale/italia-pagopa-commons",
-  "author": "Federico Feroldi <federico@teamdigitale.governo.it>",
+  "repository": "https://github.com/pagopa/italia-pagopa-commons",
+  "author": "Federico Feroldi <federico.feroldi@pagopa.it>",
   "license": "MIT",
   "private": false,
   "files": [
