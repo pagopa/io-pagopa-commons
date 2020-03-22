@@ -41,7 +41,7 @@ export const AmountInEuroCentsFromNumber = new t.Type<
 
 const PAYMENT_NOTICE_NUMBER_LENGTH = 18;
 
-const MIN_QR_CODE_LENGTH = 46;
+const MIN_QR_CODE_LENGTH = 44;
 const MAX_QR_CODE_LENGTH = 52;
 
 const ORGANIZATION_FISCAL_CODE_LENGTH = 11;
