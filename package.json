@@ -1,6 +1,6 @@
 {
   "name": "italia-pagopa-commons",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Common code for integrating with PagoPA",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
