@@ -9,7 +9,9 @@ import {
   PatternString
 } from "italia-ts-commons/lib/strings";
 
-export const MIN_AMOUNT_DIGITS = 2;
+// MIN_AMOUNT_DIGITS should be 2. This constraint changes since several qrcode are been encoded using only 1 digit
+// see https://www.pivotaltracker.com/story/show/174004231
+export const MIN_AMOUNT_DIGITS = 1;
 export const MAX_AMOUNT_DIGITS = 10;
 export const CENTS_IN_ONE_EURO = 100;
 export const AmountInEuroCents = PatternString(
@@ -41,7 +43,7 @@ export const AmountInEuroCentsFromNumber = new t.Type<
 
 const PAYMENT_NOTICE_NUMBER_LENGTH = 18;
 
-const MIN_QR_CODE_LENGTH = 44;
+const MIN_QR_CODE_LENGTH = 43;
 const MAX_QR_CODE_LENGTH = 52;
 
 const ORGANIZATION_FISCAL_CODE_LENGTH = 11;
@@ -311,8 +313,8 @@ export const PaymentNoticeQrCodeFromString = new t.Type<
 >(
   "PaymentNoticeQrCodeFromString",
   PaymentNoticeQrCode.is,
-  (v, c) =>
-    PaymentNoticeQrCode.is(v)
+  (v, c) => {
+    return PaymentNoticeQrCode.is(v)
       ? t.success(v)
       : t.string.validate(v, c).chain(s => {
           if (s.length < MIN_QR_CODE_LENGTH || s.length > MAX_QR_CODE_LENGTH) {
@@ -334,7 +336,8 @@ export const PaymentNoticeQrCodeFromString = new t.Type<
             paymentNoticeNumber,
             version
           });
-        }),
+        });
+  },
   paymentNoticeQrCodeToString
 );
 
