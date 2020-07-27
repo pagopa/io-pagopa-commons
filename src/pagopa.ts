@@ -313,8 +313,8 @@ export const PaymentNoticeQrCodeFromString = new t.Type<
 >(
   "PaymentNoticeQrCodeFromString",
   PaymentNoticeQrCode.is,
-  (v, c) => {
-    return PaymentNoticeQrCode.is(v)
+  (v, c) =>
+    PaymentNoticeQrCode.is(v)
       ? t.success(v)
       : t.string.validate(v, c).chain(s => {
           if (s.length < MIN_QR_CODE_LENGTH || s.length > MAX_QR_CODE_LENGTH) {
@@ -336,8 +336,7 @@ export const PaymentNoticeQrCodeFromString = new t.Type<
             paymentNoticeNumber,
             version
           });
-        });
-  },
+        }),
   paymentNoticeQrCodeToString
 );
 
