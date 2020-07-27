@@ -207,7 +207,7 @@ describe("QrCodeFromString", () => {
       "should succeed with valid QrCode for auxDigit equals 2"
     ]
   ])(
-    "%s, %s, %s, %s, %s",
+    "%s, %s, %s, %s, %d",
     (
       qrCodeSrt,
       paymentNoticeNumber,
