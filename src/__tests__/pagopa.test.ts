@@ -219,11 +219,7 @@ describe("QrCodeFromString", () => {
       expect(isRight(validation)).toBeTruthy();
       if (isRight(validation)) {
         expect(validation.value.amount).toHaveLength(expectedAmountLength);
-        const maybeAmount = AmountInEuroCents.decode(validation.value.amount);
-        expect(maybeAmount.isRight()).toBeTruthy();
-        if (maybeAmount.isRight()) {
-          expect(parseInt(maybeAmount.value, 10)).toEqual(amountInCents);
-        }
+        expect(parseInt(validation.value.amount, 10)).toEqual(amountInCents);
         expect(validation.value.identifier).toHaveLength(6);
         expect(validation.value.version).toHaveLength(3);
         expect(validation.value.organizationFiscalCode).toHaveLength(11);
