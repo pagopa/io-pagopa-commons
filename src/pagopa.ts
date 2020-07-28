@@ -9,7 +9,7 @@ import {
   PatternString
 } from "italia-ts-commons/lib/strings";
 
-// MIN_AMOUNT_DIGITS should be 2. This constraint changes since several qrcode are been encoded using only 1 digit
+// MIN_AMOUNT_DIGITS is 2 by specs. We amend this since several QRCodes have been encoded using only 1 digit
 // see https://www.pivotaltracker.com/story/show/174004231
 export const MIN_AMOUNT_DIGITS = 1;
 export const MAX_AMOUNT_DIGITS = 10;
