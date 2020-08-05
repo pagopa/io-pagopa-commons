@@ -43,5 +43,8 @@
     "typedoc": "^0.13.0",
     "typescript": "^3.4.5",
     "typestrict": "^1.0.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
