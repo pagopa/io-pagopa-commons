@@ -34,6 +34,8 @@
   "devDependencies": {
     "@types/jest": "^23.3.10",
     "auto-changelog": "^2.2.1",
+    "danger": "^10.6.0",
+    "danger-plugin-digitalcitizenship": "^1.0.0",
     "jest": "^23.6.0",
     "prettier": "^1.15.3",
     "rimraf": "^2.6.2",
