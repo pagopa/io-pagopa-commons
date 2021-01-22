@@ -1,5 +1,5 @@
 {
-  "name": "io-pagopa-commons",
+  "name": "@pagopa/io-pagopa-commons",
   "version": "1.2.0",
   "description": "Common code for integrating with PagoPA",
   "main": "lib/index.js",
