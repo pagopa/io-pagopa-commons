@@ -1,10 +1,10 @@
 {
-  "name": "italia-pagopa-commons",
+  "name": "@pagopa/io-pagopa-commons",
   "version": "1.2.0",
   "description": "Common code for integrating with PagoPA",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "repository": "https://github.com/pagopa/italia-pagopa-commons",
+  "repository": "https://github.com/pagopa/io-pagopa-commons",
   "author": "Federico Feroldi <federico.feroldi@pagopa.it>",
   "license": "MIT",
   "private": false,
