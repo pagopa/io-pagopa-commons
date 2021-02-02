@@ -26,7 +26,7 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "io-ts": "1.8.5",
+    "io-ts": "1.10.4",
     "italia-ts-commons": "5.1.1"
   },
   "devDependencies": {
