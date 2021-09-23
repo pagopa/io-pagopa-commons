@@ -12,7 +12,7 @@ import {
 // MIN_AMOUNT_DIGITS is 2 by specs. We amend this since several QRCodes have been encoded using only 1 digit
 // see https://www.pivotaltracker.com/story/show/174004231
 export const MIN_AMOUNT_DIGITS = 1;
-export const MAX_AMOUNT_DIGITS = 10;
+export const MAX_AMOUNT_DIGITS = 12;
 export const CENTS_IN_ONE_EURO = 100;
 export const AmountInEuroCents = PatternString(
   `^[0-9]{${MIN_AMOUNT_DIGITS},${MAX_AMOUNT_DIGITS}}$`
@@ -44,7 +44,7 @@ export const AmountInEuroCentsFromNumber = new t.Type<
 const PAYMENT_NOTICE_NUMBER_LENGTH = 18;
 
 const MIN_QR_CODE_LENGTH = 43;
-const MAX_QR_CODE_LENGTH = 52;
+const MAX_QR_CODE_LENGTH = 54;
 
 const ORGANIZATION_FISCAL_CODE_LENGTH = 11;
 
