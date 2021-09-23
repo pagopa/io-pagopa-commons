@@ -226,7 +226,6 @@ describe("QrCodeFromString", () => {
       const validation = PaymentNoticeQrCodeFromString.decode(qrCodeSrt);
       expect(isRight(validation)).toBeTruthy();
       if (isRight(validation)) {
-        console.log(JSON.stringify(validation.value));
         expect(validation.value.amount).toHaveLength(expectedAmountLength);
         expect(parseInt(validation.value.amount, 10)).toEqual(amountInCents);
         expect(validation.value.identifier).toHaveLength(6);
