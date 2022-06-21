@@ -1,13 +1,13 @@
 /**
  * Typescript (io-ts) types related to PagoPA.
  */
-import * as t from "io-ts";
 import {
-  // tslint:disable-next-line:no-unused-variable
-  IPatternStringTag,
   OrganizationFiscalCode,
   PatternString
-} from "italia-ts-commons/lib/strings";
+} from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as t from "io-ts";
 
 // MIN_AMOUNT_DIGITS is 2 by specs. We amend this since several QRCodes have been encoded using only 1 digit
 // see https://www.pivotaltracker.com/story/show/174004231
@@ -179,59 +179,73 @@ export const PaymentNoticeNumberFromString = new t.Type<
   (v, c) =>
     PaymentNoticeNumber.is(v)
       ? t.success(v)
-      : t.string.validate(v, c).chain(s => {
-          if (s.length !== PAYMENT_NOTICE_NUMBER_LENGTH) {
-            return t.failure(s, c);
-          }
-          switch (s[0]) {
-            case "0": {
-              const [, auxDigit, applicationCode, iuv13, checkDigit] = (s.match(
-                /^(\d{1})(\d{2})(\d{13})(\d{2})$/
-              ) || []) as ReadonlyArray<string | undefined>;
-
-              return PaymentNoticeNumber0.decode({
-                applicationCode,
-                auxDigit,
-                checkDigit,
-                iuv13
-              });
-            }
-            case "1": {
-              // tslint:disable-next-line:no-dead-store
-              const [, auxDigit, iuv17, ..._] = (s.match(/^(\d{1})(\d{17})$/) ||
-                []) as ReadonlyArray<string | undefined>;
-              return PaymentNoticeNumber1.decode({
-                auxDigit,
-                iuv17
-              });
-            }
-            case "2": {
-              // tslint:disable-next-line:no-dead-store
-              const [, auxDigit, iuv15, checkDigit, ..._] = (s.match(
-                /^(\d{1})(\d{15})(\d{2})$/
-              ) || []) as ReadonlyArray<string | undefined>;
-              return PaymentNoticeNumber2.decode({
-                auxDigit,
-                checkDigit,
-                iuv15
-              });
-            }
-            case "3": {
-              // tslint:disable-next-line:no-dead-store
-              const [, auxDigit, segregationCode, iuv13, checkDigit] = (s.match(
-                /^(\d{1})(\d{2})(\d{13})(\d{2})$/
-              ) || []) as ReadonlyArray<string | undefined>;
-              return PaymentNoticeNumber3.decode({
-                auxDigit,
-                checkDigit,
-                iuv13,
-                segregationCode
-              });
-            }
-            default:
+      : pipe(
+          t.string.validate(v, c),
+          E.chain(s => {
+            if (s.length !== PAYMENT_NOTICE_NUMBER_LENGTH) {
               return t.failure(s, c);
-          }
-        }),
+            }
+            switch (s[0]) {
+              case "0": {
+                const [
+                  ,
+                  auxDigit,
+                  applicationCode,
+                  iuv13,
+                  checkDigit
+                ] = (s.match(/^(\d{1})(\d{2})(\d{13})(\d{2})$/) ||
+                  []) as ReadonlyArray<string | undefined>;
+
+                return PaymentNoticeNumber0.decode({
+                  applicationCode,
+                  auxDigit,
+                  checkDigit,
+                  iuv13
+                });
+              }
+              case "1": {
+                // tslint:disable-next-line:no-dead-store
+                const [, auxDigit, iuv17, ..._] = (s.match(
+                  /^(\d{1})(\d{17})$/
+                ) || []) as ReadonlyArray<string | undefined>;
+                return PaymentNoticeNumber1.decode({
+                  auxDigit,
+                  iuv17
+                });
+              }
+              case "2": {
+                // tslint:disable-next-line:no-dead-store
+                const [, auxDigit, iuv15, checkDigit, ..._] = (s.match(
+                  /^(\d{1})(\d{15})(\d{2})$/
+                ) || []) as ReadonlyArray<string | undefined>;
+                return PaymentNoticeNumber2.decode({
+                  auxDigit,
+                  checkDigit,
+                  iuv15
+                });
+              }
+              case "3": {
+                // tslint:disable-next-line:no-dead-store
+                const [
+                  ,
+                  auxDigit,
+                  segregationCode,
+                  iuv13,
+                  checkDigit
+                ] = (s.match(/^(\d{1})(\d{2})(\d{13})(\d{2})$/) ||
+                  []) as ReadonlyArray<string | undefined>;
+                return PaymentNoticeNumber3.decode({
+                  auxDigit,
+                  checkDigit,
+                  iuv13,
+                  segregationCode
+                });
+              }
+              default:
+                return t.failure(s, c);
+            }
+          })
+        ),
   paymentNoticeNumberToString
 );
 
@@ -316,27 +330,33 @@ export const PaymentNoticeQrCodeFromString = new t.Type<
   (v, c) =>
     PaymentNoticeQrCode.is(v)
       ? t.success(v)
-      : t.string.validate(v, c).chain(s => {
-          if (s.length < MIN_QR_CODE_LENGTH || s.length > MAX_QR_CODE_LENGTH) {
-            return t.failure(s, c);
-          }
-          const [
-            identifier,
-            version,
-            paymentNoticeNumber,
-            organizationFiscalCode,
-            amount,
-            // tslint:disable-next-line:no-dead-store
-            ..._
-          ] = (s.split("|") || []) as ReadonlyArray<string | undefined>;
-          return PaymentNoticeQrCode.decode({
-            amount,
-            identifier,
-            organizationFiscalCode,
-            paymentNoticeNumber,
-            version
-          });
-        }),
+      : pipe(
+          t.string.validate(v, c),
+          E.chain(s => {
+            if (
+              s.length < MIN_QR_CODE_LENGTH ||
+              s.length > MAX_QR_CODE_LENGTH
+            ) {
+              return t.failure(s, c);
+            }
+            const [
+              identifier,
+              version,
+              paymentNoticeNumber,
+              organizationFiscalCode,
+              amount,
+              // tslint:disable-next-line:no-dead-store
+              ..._
+            ] = (s.split("|") || []) as ReadonlyArray<string | undefined>;
+            return PaymentNoticeQrCode.decode({
+              amount,
+              identifier,
+              organizationFiscalCode,
+              paymentNoticeNumber,
+              version
+            });
+          })
+        ),
   paymentNoticeQrCodeToString
 );
 
@@ -374,24 +394,27 @@ export const RptIdFromString = new t.Type<RptId, string>(
   (v, c) =>
     RptId.is(v)
       ? t.success(v)
-      : t.string.validate(v, c).chain(s => {
-          if (s.length !== RPT_ID_LENGTH) {
-            return t.failure(s, c);
-          }
-          const [
-            ,
-            organizationFiscalCode,
-            paymentNoticeNumber,
-            // tslint:disable-next-line:no-dead-store
-            ..._
-          ] = (s.match(/^(\d{11})(\d{18})$/) || []) as ReadonlyArray<
-            string | undefined
-          >;
-          return RptId.decode({
-            organizationFiscalCode,
-            paymentNoticeNumber
-          });
-        }),
+      : pipe(
+          t.string.validate(v, c),
+          E.chain(s => {
+            if (s.length !== RPT_ID_LENGTH) {
+              return t.failure(s, c);
+            }
+            const [
+              ,
+              organizationFiscalCode,
+              paymentNoticeNumber,
+              // tslint:disable-next-line:no-dead-store
+              ..._
+            ] = (s.match(/^(\d{11})(\d{18})$/) || []) as ReadonlyArray<
+              string | undefined
+            >;
+            return RptId.decode({
+              organizationFiscalCode,
+              paymentNoticeNumber
+            });
+          })
+        ),
   rptIdToString
 );
 
@@ -415,7 +438,9 @@ export function rptIdFromPaymentNoticeQrCode(
 export function rptIdFromQrCodeString(
   qrCodeString: string
 ): t.Validation<RptId> {
-  return PaymentNoticeQrCodeFromString.decode(qrCodeString).chain(
-    rptIdFromPaymentNoticeQrCode
+  return pipe(
+    qrCodeString,
+    PaymentNoticeQrCodeFromString.decode,
+    E.chain(rptIdFromPaymentNoticeQrCode)
   );
 }

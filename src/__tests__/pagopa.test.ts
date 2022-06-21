@@ -1,6 +1,7 @@
-import { isRight } from "fp-ts/lib/Either";
-import { StrMap, toArray } from "fp-ts/lib/StrMap";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as R from "fp-ts/lib/Record";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -35,9 +36,9 @@ describe("PaymentNoticeNumberFromString", () => {
       const validation = PaymentNoticeNumberFromString.decode(
         aValidPaymentNoticeNumber
       );
-      expect(isRight(validation)).toBeTruthy();
-      if (isRight(validation)) {
-        const paymentNoticeNumber = validation.value;
+      expect(E.isRight(validation)).toBeTruthy();
+      if (E.isRight(validation)) {
+        const paymentNoticeNumber = validation.right;
         expect(paymentNoticeNumber.auxDigit).toBeDefined();
         switch (paymentNoticeNumber.auxDigit) {
           case "0":
@@ -58,12 +59,17 @@ describe("PaymentNoticeNumberFromString", () => {
             expect(paymentNoticeNumber.iuv13).toHaveLength(13);
             break;
         }
+
+        expect(PaymentNoticeNumber.is(validation.right)).toBeTruthy();
+
+        const encoded = pipe(
+          validation.right,
+          PaymentNoticeNumber.decode,
+          E.map(PaymentNoticeNumberFromString.encode),
+          E.getOrElse(() => "")
+        );
+        expect(encoded).toEqual(aValidPaymentNoticeNumber);
       }
-      expect(PaymentNoticeNumber.is(validation.value)).toBeTruthy();
-      const encoded = PaymentNoticeNumber.decode(validation.value)
-        .map(PaymentNoticeNumberFromString.encode)
-        .getOrElse("");
-      expect(encoded).toEqual(aValidPaymentNoticeNumber);
     });
   });
 
@@ -77,8 +83,10 @@ describe("PaymentNoticeNumberFromString", () => {
       const validation = PaymentNoticeNumberFromString.decode(
         aValidPaymentNoticeNumber
       );
-      expect(isRight(validation)).toBeFalsy();
-      expect(PaymentNoticeNumber.is(validation.value)).toBeFalsy();
+      expect(E.isRight(validation)).toBeFalsy();
+      if (E.isRight(validation)) {
+        expect(PaymentNoticeNumber.is(validation.right)).toBeFalsy();
+      }
     });
   });
 
@@ -216,39 +224,39 @@ describe("QrCodeFromString", () => {
       amountInCents
     ) => {
       const validation = PaymentNoticeQrCodeFromString.decode(qrCodeSrt);
-      expect(isRight(validation)).toBeTruthy();
-      if (isRight(validation)) {
-        expect(validation.value.amount).toHaveLength(expectedAmountLength);
-        expect(parseInt(validation.value.amount, 10)).toEqual(amountInCents);
-        expect(validation.value.identifier).toHaveLength(6);
-        expect(validation.value.version).toHaveLength(3);
-        expect(validation.value.organizationFiscalCode).toHaveLength(11);
-        expect(validation.value.paymentNoticeNumber.auxDigit).toEqual(
+      expect(E.isRight(validation)).toBeTruthy();
+      if (E.isRight(validation)) {
+        expect(validation.right.amount).toHaveLength(expectedAmountLength);
+        expect(parseInt(validation.right.amount, 10)).toEqual(amountInCents);
+        expect(validation.right.identifier).toHaveLength(6);
+        expect(validation.right.version).toHaveLength(3);
+        expect(validation.right.organizationFiscalCode).toHaveLength(11);
+        expect(validation.right.paymentNoticeNumber.auxDigit).toEqual(
           expectedAuxDigit
         );
 
         switch (expectedAuxDigit) {
           case "0":
             expect(
-              (validation.value.paymentNoticeNumber as PaymentNoticeNumber0)
+              (validation.right.paymentNoticeNumber as PaymentNoticeNumber0)
                 .iuv13
             ).toEqual(paymentNoticeNumber);
             break;
           case "1":
             expect(
-              (validation.value.paymentNoticeNumber as PaymentNoticeNumber1)
+              (validation.right.paymentNoticeNumber as PaymentNoticeNumber1)
                 .iuv17
             ).toEqual(paymentNoticeNumber);
             break;
           case "2":
             expect(
-              (validation.value.paymentNoticeNumber as PaymentNoticeNumber2)
+              (validation.right.paymentNoticeNumber as PaymentNoticeNumber2)
                 .iuv15
             ).toEqual(paymentNoticeNumber);
             break;
           case "3":
             expect(
-              (validation.value.paymentNoticeNumber as PaymentNoticeNumber3)
+              (validation.right.paymentNoticeNumber as PaymentNoticeNumber3)
                 .iuv13
             ).toEqual(paymentNoticeNumber);
             break;
@@ -256,7 +264,7 @@ describe("QrCodeFromString", () => {
             expect(false).toBeTruthy();
         }
 
-        expect(PaymentNoticeQrCodeFromString.encode(validation.value)).toEqual(
+        expect(PaymentNoticeQrCodeFromString.encode(validation.right)).toEqual(
           qrCodeSrt
         );
       }
@@ -273,7 +281,7 @@ describe("QrCodeFromString", () => {
     ];
     qrCodeSrts.map(qrCodeSrt => {
       const validation = PaymentNoticeQrCodeFromString.decode(qrCodeSrt);
-      expect(isRight(validation)).toBeFalsy();
+      expect(E.isRight(validation)).toBeFalsy();
     });
   });
 });
@@ -282,15 +290,15 @@ describe("RptIdFromString", () => {
   it("should succeed with valid RptId", () => {
     const rptIdStr = "12345678901123456789012345678";
     const validation = RptIdFromString.decode(rptIdStr);
-    expect(isRight(validation)).toBeTruthy();
-    if (isRight(validation)) {
-      expect(validation.value.organizationFiscalCode).toHaveLength(11);
-      expect(validation.value.paymentNoticeNumber.auxDigit).toEqual("1");
+    expect(E.isRight(validation)).toBeTruthy();
+    if (E.isRight(validation)) {
+      expect(validation.right.organizationFiscalCode).toHaveLength(11);
+      expect(validation.right.paymentNoticeNumber.auxDigit).toEqual("1");
       // tslint:disable-next-line:no-any
-      expect((validation.value.paymentNoticeNumber as any).iuv17).toEqual(
+      expect((validation.right.paymentNoticeNumber as any).iuv17).toEqual(
         "23456789012345678"
       );
-      expect(RptIdFromString.encode(validation.value)).toEqual(rptIdStr);
+      expect(RptIdFromString.encode(validation.right)).toEqual(rptIdStr);
     }
   });
 
@@ -301,7 +309,7 @@ describe("RptIdFromString", () => {
     ];
     rptIdStrs.map(rptIdStr => {
       const validation = RptIdFromString.decode(rptIdStr);
-      expect(isRight(validation)).toBeFalsy();
+      expect(E.isRight(validation)).toBeFalsy();
     });
   });
 });
@@ -344,7 +352,7 @@ describe("rptIdFromPaymentNoticeQrCode", () => {
       }
     ];
     qrCodes.forEach(qrCode =>
-      expect(rptIdFromPaymentNoticeQrCode(qrCode).isRight()).toBeTruthy()
+      expect(E.isRight(rptIdFromPaymentNoticeQrCode(qrCode))).toBeTruthy()
     );
   });
 
@@ -374,7 +382,7 @@ describe("rptIdFromPaymentNoticeQrCode", () => {
       }
     ];
     qrCodes.forEach(qrCode =>
-      expect(rptIdFromPaymentNoticeQrCode(qrCode).isLeft()).toBeTruthy()
+      expect(E.isLeft(rptIdFromPaymentNoticeQrCode(qrCode))).toBeTruthy()
     );
   });
 });
@@ -388,7 +396,7 @@ describe("rptIdFromQrCodeString", () => {
       "PAGOPA|002|301234567890123344|12345678901|0000012345"
     ];
     qrCodes.forEach(qrCode =>
-      expect(rptIdFromQrCodeString(qrCode).isRight()).toBeTruthy()
+      expect(E.isRight(rptIdFromQrCodeString(qrCode))).toBeTruthy()
     );
   });
 
@@ -398,24 +406,27 @@ describe("rptIdFromQrCodeString", () => {
       "PAGOPA|002|101234567890123456|12345*78901|12345" // invalid fiscal code
     ];
     qrCodes.forEach(qrCode =>
-      expect(rptIdFromQrCodeString(qrCode).isRight()).toBeFalsy()
+      expect(E.isRight(rptIdFromQrCodeString(qrCode))).toBeFalsy()
     );
   });
 });
 
 describe("AmountInEuroCentsFromNumber", () => {
   it("should convert numbers into AmountInEuroCents", () => {
-    const expectedMapping = new StrMap({
+    const expectedMapping = {
       "1234567890": 12345678.9,
       "12345": 123.45,
       "100": 1,
       "30": 0.3,
       "01": 0.01,
       "12": 0.1 + 0.02 // 0.12000000000000001 but should be considered as .12
-    });
+    };
 
-    toArray(expectedMapping).forEach(([k, v]: [string, number]) =>
-      expect(AmountInEuroCentsFromNumber.decode(v).value).toBe(k)
-    );
+    R.toArray(expectedMapping).forEach(([k, v]: [string, number]) => {
+      const decodedV = AmountInEuroCentsFromNumber.decode(v);
+      if (E.isRight(decodedV)) {
+        expect(decodedV.right).toBe(k);
+      }
+    });
   });
 });
