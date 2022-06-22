@@ -98,7 +98,7 @@ stages:
                 LICENSE
                 CHANGELOG.md
                 package.json
-                dist/**/*
+                lib/**/*
                 openapi/definitions.yaml
             displayName: 'Copy bundle files'
           
