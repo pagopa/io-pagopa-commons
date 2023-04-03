@@ -185,10 +185,10 @@
   dependencies:
     "@octokit/openapi-types" "^12.11.0"
 
-"@pagopa/ts-commons@^10.5.0":
-  version "10.15.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.15.0.tgz#8e3030a2ebc16c3edb5ef99962c6e8d534826957"
-  integrity sha512-MTmD0geIN9L9vnEYjPTE7v6Bu+IRTFMre+3K4LWYjy1AaRmYcpSrc9HTZgyCRW8uLCvw1BmDKcKtSiETM817kw==
+"@pagopa/ts-commons@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-11.0.0.tgz#e0384863e564e87815c43b2ab7999af682ee5fc1"
+  integrity sha512-KA+riHTKhNcv5UGP33+AIYBWx7bAwk3c5/eQAUFl16gDYeXrceQpJ/cq0fyOC0AnUmNuMPiHQOksgjjeioaLIQ==
   dependencies:
     abort-controller "^3.0.0"
     agentkeepalive "^4.1.4"
@@ -258,10 +258,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.11.tgz#b3b790f09cb1696cffcec605de025b088fa4225f"
   integrity sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==
 
-"@types/node@10.14.1":
-  version "10.14.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.1.tgz#8701cd760acc20beba5ffe0b7a1b879f39cb8c41"
-  integrity sha512-Rymt08vh1GaW4vYB6QP61/5m/CFLGnFZP++bJpWbiNxceNa6RBipDmb413jvtSf/R1gg5a/jQVl2jY4XVRscEA==
+"@types/node@~18.13.0":
+  version "18.13.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.13.0.tgz#0400d1e6ce87e9d3032c19eb6c58205b0d3f7850"
+  integrity sha512-gC3TazRzGoOnoKAhUx+Q0t8S9Tzs74z7m0ipwGpSqQrleP14hKxP4/JUeEQcD3W1/aIpnWl8pHowI7WokuZpXg==
 
 "@types/shelljs@^0.8.0":
   version "0.8.11"
