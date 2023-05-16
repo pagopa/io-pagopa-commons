@@ -207,6 +207,14 @@ describe("QrCodeFromString", () => {
       "should succeed with valid QrCode of four digits amount"
     ],
     [
+      "PAGOPA|002|001721265093769322|00087640256|10100000002",
+      "7212650937693",
+      11,
+      "0",
+      10100000002,
+      "should succeed with valid QrCode of twelve (max) digits amount"
+    ],
+    [
       "PAGOPA|002|223456789012345678|12345678901|1234567801",
       "234567890123456",
       10,
