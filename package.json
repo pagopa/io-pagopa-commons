@@ -26,13 +26,13 @@
     "preset": "ts-jest"
   },
   "dependencies": {
-    "io-ts": "^2.2.16",
+    "@pagopa/ts-commons": "^11.0.0",
     "fp-ts": "^2.12.1",
-    "@pagopa/ts-commons": "^10.5.0"
+    "io-ts": "^2.2.16"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
-    "@types/node": "10.14.1",
+    "@types/node": "~18.13.0",
     "auto-changelog": "^2.2.1",
     "danger": "^10.6.0",
     "danger-plugin-digitalcitizenship": "^1.0.0",
